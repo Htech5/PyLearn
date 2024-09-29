@@ -1,0 +1,4 @@
+n = 0
+while n <= 12:
+    print("while perulangan pada python ke-", (n))
+    n += 1
