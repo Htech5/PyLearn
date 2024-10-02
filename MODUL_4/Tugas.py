@@ -1,64 +1,67 @@
-class Buku:
-    def __init__(self, judul, stok):
-        self.judul = judul
-        self.stok = stok
-
-    def pinjam_buku(self, jumlah):
-        if jumlah <= self.stok:
-            self.stok -= jumlah
-            return f"{jumlah} buku '{self.judul}' telah dipinjam."
-        return f"Stok tidak mencukupi untuk meminjam {jumlah} buku '{self.judul}'."
-
-    def info_buku(self):
-        print(f"Judul: {self.judul}, Stok: {self.stok}")
+import re
 
 
-def tampilkan_daftar_buku(daftar_buku):
-    print("\nDaftar Buku:")
-    for buku in daftar_buku:
-        buku.info_buku()
+class UserService:
+    def __init__(self):
+        self.users = {}
 
+    def is_strong_password(self, password):
+        if (
+            len(password) >= 8
+            and re.search("[a-z]", password)
+            and re.search("[A-Z]", password)
+            and re.search("[0-9]", password)
+            and re.search("[@#$%*^&+=!]", password)
+        ):
+            return True
+        return False
 
-def cari_buku(daftar_buku, judul):
-    return next(
-        (buku for buku in daftar_buku if buku.judul.lower() == judul.lower()), None
-    )
+    def register(self, username, password):
+        if username in self.users:
+            print("Username already exists. Please try another one.")
+        elif not self.is_strong_password(password):
+            print(
+                "Password is not strong enough. It must be at least 8 characters long, "
+                "contain at least one uppercase letter, one lowercase letter, one number, "
+                "and one special character (@#$%^&+=!)."
+            )
+        else:
+            self.users[username] = password
+            print("Registration successful.")
 
-
-def pinjam_buku_di_perpustakaan(daftar_buku):
-    judul = input("Masukkan judul buku yang ingin dipinjam: ").strip().lower()
-    buku = cari_buku(daftar_buku, judul)
-    if buku:
-        jumlah = int(
-            input(f"Masukkan jumlah buku '{buku.judul}' yang ingin dipinjam: ")
-        )
-        print(buku.pinjam_buku(jumlah))
-    else:
-        print("Buku tidak ditemukan.")
+    def login(self, username, password):
+        if username in self.users and self.users[username] == password:
+            print(f"Welcome {username}, you are now logged in.")
+        else:
+            print("Invalid username or password.")
 
 
 def main():
-    daftar_buku = [
-        Buku("Python untuk Pemula", 5),
-        Buku("Pemrograman Java", 3),
-        Buku("Data Science", 2),
-    ]
-
+    service = UserService()
     while True:
-        print(
-            "\n=== Perpustakaan ===\n1. Tampilkan Daftar Buku\n2. Pinjam Buku\n3. Keluar"
-        )
-        pilihan = input("Pilih menu: ")
+        print("\n=== Menu ===")
+        print("1. Register")
+        print("2. Login")
+        print("3. Exit")
 
-        if pilihan == "1":
-            tampilkan_daftar_buku(daftar_buku)
-        elif pilihan == "2":
-            pinjam_buku_di_perpustakaan(daftar_buku)
-        elif pilihan == "3":
-            print("Terima kasih telah menggunakan sistem perpustakaan.")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            username = input("Enter username: ")
+            password = input("Enter password: ")
+            service.register(username, password)
+
+        elif choice == "2":
+            username = input("Enter username: ")
+            password = input("Enter password: ")
+            service.login(username, password)
+
+        elif choice == "3":
+            print("Thank you for using our system. Goodbye!")
             break
+
         else:
-            print("Pilihan tidak valid, silakan coba lagi.")
+            print("Invalid choice. Please try again.")
 
 
 if __name__ == "__main__":
