@@ -5,17 +5,6 @@ class UserService:
     def __init__(self):
         self.users = {}
 
-    def is_strong_password(self, password):
-        if (
-            len(password) >= 8
-            and re.search("[a-z]", password)
-            and re.search("[A-Z]", password)
-            and re.search("[0-9]", password)
-            and re.search("[@#$%*^&+=!]", password)
-        ):
-            return True
-        return False
-
     def register(self, username, password):
         if username in self.users:
             print("Username already exists. Please try another one.")
