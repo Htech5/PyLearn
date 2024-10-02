@@ -29,11 +29,7 @@ class UserService:
             self.users[username] = password
             print("Registration successful.")
 
-    def login(self, username, password):
-        if username in self.users and self.users[username] == password:
-            print(f"Welcome {username}, you are now logged in.")
-        else:
-            print("Invalid username or password.")
+    
 
 
 def main():
