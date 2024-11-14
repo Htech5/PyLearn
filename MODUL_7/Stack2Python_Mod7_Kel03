@@ -1,0 +1,45 @@
+count = 0
+size = -1
+stack = []
+
+while count == 0:
+    print("---Ini Stack---")
+    print("1. PUSH Item")
+    print("2. POP Item")
+    print("3. Lihat Daftar Data")
+    print("4. Lihat Data Teratas")
+    print("5. Keluar")
+
+    pilihan = int(input("Masukkan Pilihan: "))
+
+    if pilihan == 1:
+        data = input("Data yang ditambahkan: ")
+        stack.append(data)
+        size += 1
+        print("")
+
+    elif pilihan == 2:
+        if stack:  # Check if stack is not empty
+            stack.pop()
+            size -= 1
+        else:
+            print("Stack kosong, tidak dapat POP!")
+        print("")
+
+    elif pilihan == 3:
+        print(stack)
+        print("")
+
+    elif pilihan == 4:
+        if stack:
+            print(stack[size])
+        else:
+            print("Stack kosong, tidak ada data teratas!")
+        print("")
+
+    elif pilihan == 5:
+        print("Program selesai")
+        count = 1
+
+    else:
+        print("Pilihan tidak valid, silakan coba lagi.")
